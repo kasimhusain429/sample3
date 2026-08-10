@@ -1,10 +1,17 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Inter, Noto_Serif_Devanagari, Dancing_Script } from "next/font/google";
+import { Cormorant_Garamond, Playfair_Display, Inter, Noto_Serif_Devanagari, Dancing_Script } from "next/font/google";
 import "./globals.css";
 
 import LenisProvider from "./components/layout/LenisProvider";
 import Navigation from "./components/layout/Navigation";
 import Footer from "./components/layout/Footer";
+
+const cormorant = Cormorant_Garamond({
+  variable: "--font-cormorant",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600"],
+  style: ["normal", "italic"],
+});
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -41,8 +48,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${playfair.variable} ${inter.variable} ${tiro.variable} ${dancing.variable} antialiased`}>
-      <body className="min-h-full flex flex-col overflow-x-hidden">
+    <html lang="en" className={`${cormorant.variable} ${playfair.variable} ${inter.variable} ${tiro.variable} ${dancing.variable} antialiased`}>
+      <body className="min-h-full flex flex-col overflow-x-hidden bg-parchment">
         <LenisProvider>
           <Navigation />
           <main className="flex-1 w-full relative z-10">

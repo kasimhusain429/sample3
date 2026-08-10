@@ -11,6 +11,7 @@ const services = [
     desc: "Perfectly tailored garments that flatter your unique silhouette.",
     price: "₹800",
     img: "/images/hero_bg.png",
+    accent: "#6D1E37",
   },
   {
     id: "02",
@@ -18,6 +19,7 @@ const services = [
     desc: "Intricate necklines, embroidery, and modern cuts for every saree.",
     price: "₹500",
     img: "/images/blouse.png",
+    accent: "#B5533C",
   },
   {
     id: "03",
@@ -25,6 +27,7 @@ const services = [
     desc: "Exquisite handwork and detailing for your most special day.",
     price: "₹5000",
     img: "/images/lehenga.png",
+    accent: "#C4788A",
   },
   {
     id: "04",
@@ -32,6 +35,7 @@ const services = [
     desc: "Premium borders, latkans, and custom finishing for heirloom sarees.",
     price: "₹300",
     img: "/images/craft_bg.png",
+    accent: "#B8883A",
   },
   {
     id: "05",
@@ -39,6 +43,7 @@ const services = [
     desc: "Expert resizing and reshaping to make off-the-rack feel custom.",
     price: "₹200",
     img: "/images/sharara.png",
+    accent: "#6D1E37",
   },
   {
     id: "06",
@@ -46,6 +51,7 @@ const services = [
     desc: "Fast-track stitching when you need it by tomorrow.",
     price: "₹1200",
     img: "/images/about_bg.png",
+    accent: "#B5533C",
   },
 ];
 
@@ -62,13 +68,10 @@ export default function Services() {
     const ctx = gsap.context(() => {
       if (sectionRef.current && scrollWrapperRef.current && cardsRef.current) {
         const cards = cardsRef.current;
-        
-        // Calculate the exact translation distance
-        // padding-left is 96px on md (pl-24), so we subtract it to prevent overscrolling.
         const totalWidth = cards.scrollWidth;
         const viewportWidth = window.innerWidth;
         const paddingOffset = window.innerWidth >= 768 ? 96 : 24;
-        
+
         gsap.to(cards, {
           x: -(totalWidth - viewportWidth + paddingOffset),
           ease: "none",
@@ -87,44 +90,67 @@ export default function Services() {
   }, []);
 
   return (
-    <section ref={sectionRef} id="services" className="bg-void relative z-10 overflow-hidden">
-      <div className="h-screen w-full flex flex-col justify-center bg-void">
+    <section ref={sectionRef} id="services" className="bg-parchment relative z-10 overflow-hidden">
+      <div className="h-screen w-full flex flex-col justify-center bg-parchment">
+
         <div className="container mx-auto px-6 mb-12">
-          <h3 className="text-gold tracking-[0.2em] uppercase text-sm mb-4 font-medium">The Atelier Menu</h3>
-          <h2 className="text-display-md text-cream">Our Services</h2>
+          <span className="label-overline text-antique-gold block mb-4">The Atelier Menu</span>
+          <h2 className="text-display-md text-espresso font-display" style={{ fontWeight: 300 }}>Our Services</h2>
         </div>
 
         <div ref={scrollWrapperRef} className="pl-6 md:pl-24">
           <div ref={cardsRef} className="flex gap-8 w-[max-content]">
             {services.map((service, index) => (
-              <div 
-                key={index} 
-                className="w-[80vw] md:w-[40vw] lg:w-[30vw] h-[60vh] glass-panel rounded-xl p-8 flex flex-col justify-between group relative overflow-hidden transition-transform duration-500 hover:-translate-y-2"
+              <div
+                key={index}
+                className="w-[80vw] md:w-[38vw] lg:w-[28vw] h-[60vh] rounded-xl relative overflow-hidden group transition-all duration-500 hover:-translate-y-3 cursor-pointer shadow-md shadow-espresso/10 hover:shadow-xl hover:shadow-espresso/15"
+                style={{ border: "1px solid rgba(217, 207, 197, 0.8)" }}
               >
-                <div 
-                  className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110 z-0 opacity-40 mix-blend-overlay" 
-                  style={{ backgroundImage: `url(${service.img})` }} 
+                {/* Background image */}
+                <div
+                  className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110 z-0"
+                  style={{ backgroundImage: `url(${service.img})` }}
                 />
-                <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-void/60 via-void/80 to-warm-void/95 group-hover:from-void/40 transition-colors duration-500 z-0" />
-                
-                <div className="relative z-10 flex justify-between items-start">
-                  <span className="text-gold font-display text-4xl opacity-30">{service.id}</span>
-                  <span className="text-sm font-medium px-3 py-1 border border-gold/30 rounded-full text-cream">
+                {/* Gradient overlay — warm ivory at bottom */}
+                <div className="absolute inset-0 bg-gradient-to-b from-espresso/30 via-espresso/60 to-espresso/92 z-0" />
+                {/* Top warm tint */}
+                <div
+                  className="absolute top-0 left-0 w-full h-1/3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0"
+                  style={{ background: `linear-gradient(to bottom, ${service.accent}22, transparent)` }}
+                />
+
+                {/* Card top row */}
+                <div className="relative z-10 flex justify-between items-start p-7">
+                  <span
+                    className="text-5xl font-display opacity-25 text-ivory"
+                    style={{ fontWeight: 300 }}
+                  >
+                    {service.id}
+                  </span>
+                  <span
+                    className="text-xs font-medium px-3 py-1.5 rounded-full text-ivory backdrop-blur-sm"
+                    style={{ background: `${service.accent}CC`, border: `1px solid ${service.accent}` }}
+                  >
                     From {service.price}
                   </span>
                 </div>
-                
-                <div className="relative z-10">
-                  <h3 className="text-display-sm text-cream mb-4 group-hover:text-gold transition-colors duration-300">{service.title}</h3>
-                  <p className="text-sand leading-relaxed mb-8">{service.desc}</p>
-                  <button className="flex items-center gap-2 text-sm text-cream hover:text-gold uppercase tracking-widest font-medium transition-colors">
-                    Inquire Now <span className="text-gold">→</span>
+
+                {/* Card bottom */}
+                <div className="absolute bottom-0 left-0 right-0 z-10 p-7">
+                  <h3 className="text-display-sm text-ivory mb-3 font-display group-hover:text-pale-gold transition-colors duration-300" style={{ fontWeight: 300 }}>
+                    {service.title}
+                  </h3>
+                  <p className="text-ivory/70 leading-relaxed mb-7 text-sm">{service.desc}</p>
+                  <button className="flex items-center gap-2 text-xs text-antique-gold hover:text-warm-gold uppercase tracking-widest font-medium transition-colors group/btn">
+                    <span>Inquire Now</span>
+                    <span className="transition-transform group-hover/btn:translate-x-1">→</span>
                   </button>
                 </div>
               </div>
             ))}
           </div>
         </div>
+
       </div>
     </section>
   );

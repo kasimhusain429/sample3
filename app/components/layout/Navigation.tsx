@@ -21,34 +21,62 @@ export default function Navigation() {
     <header
       className={cn(
         "fixed top-0 w-full z-50 transition-all duration-500",
-        scrolled ? "bg-warm-void/90 backdrop-blur-md py-4 shadow-lg" : "bg-transparent py-6"
+        scrolled
+          ? "bg-ivory/95 backdrop-blur-md py-4 shadow-[0_1px_24px_rgba(28,20,16,0.08)] border-b border-mist/60"
+          : "bg-transparent py-6"
       )}
     >
       <div className="container mx-auto px-6 flex justify-between items-center">
-        <Link href="/" className="font-hindi text-2xl text-gold">
+        <Link
+          href="/"
+          className={cn(
+            "font-hindi text-2xl transition-colors duration-300",
+            scrolled ? "text-wine" : "text-antique-gold"
+          )}
+        >
           सिद्ध लक्ष्मी
         </Link>
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex gap-8 items-center">
-          <Link href="#craft" className="text-sm font-medium hover:text-gold transition-colors">
-            Our Craft
-          </Link>
-          <Link href="#services" className="text-sm font-medium hover:text-gold transition-colors">
-            Services
-          </Link>
-          <Link href="#portfolio" className="text-sm font-medium hover:text-gold transition-colors">
-            Portfolio
-          </Link>
-          <Link href="#contact" className="text-sm font-medium px-4 py-2 border border-gold/30 rounded-full hover:bg-gold/10 transition-colors text-gold">
+          {["#craft", "#services", "#portfolio"].map((href, i) => {
+            const labels = ["Our Craft", "Services", "Portfolio"];
+            return (
+              <Link
+                key={href}
+                href={href}
+                className={cn(
+                  "text-sm font-medium tracking-wide transition-colors duration-200",
+                  scrolled
+                    ? "text-walnut hover:text-wine"
+                    : "text-ivory/90 hover:text-antique-gold"
+                )}
+              >
+                {labels[i]}
+              </Link>
+            );
+          })}
+          <Link
+            href="#contact"
+            className={cn(
+              "text-sm font-medium px-5 py-2.5 rounded-sm transition-all duration-300",
+              scrolled
+                ? "bg-wine text-ivory hover:bg-wine-light border border-wine"
+                : "bg-antique-gold/15 text-antique-gold border border-antique-gold/40 hover:bg-antique-gold hover:text-ivory"
+            )}
+          >
             Book Consultation
           </Link>
         </nav>
 
         {/* Mobile Nav Toggle */}
         <button
-          className="md:hidden text-cream"
+          className={cn(
+            "md:hidden transition-colors",
+            scrolled ? "text-walnut" : "text-ivory"
+          )}
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          aria-label="Toggle menu"
         >
           {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
@@ -56,17 +84,26 @@ export default function Navigation() {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden absolute top-full left-0 w-full bg-void border-t border-gold/10 p-6 flex flex-col gap-4">
-          <Link href="#craft" className="text-lg hover:text-gold" onClick={() => setMobileMenuOpen(false)}>
-            Our Craft
-          </Link>
-          <Link href="#services" className="text-lg hover:text-gold" onClick={() => setMobileMenuOpen(false)}>
-            Services
-          </Link>
-          <Link href="#portfolio" className="text-lg hover:text-gold" onClick={() => setMobileMenuOpen(false)}>
-            Portfolio
-          </Link>
-          <Link href="#contact" className="text-lg text-gold" onClick={() => setMobileMenuOpen(false)}>
+        <div className="md:hidden absolute top-full left-0 w-full bg-ivory/98 backdrop-blur-xl border-t border-mist shadow-lg p-6 flex flex-col gap-5">
+          {[
+            { href: "#craft", label: "Our Craft" },
+            { href: "#services", label: "Services" },
+            { href: "#portfolio", label: "Portfolio" },
+          ].map(({ href, label }) => (
+            <Link
+              key={href}
+              href={href}
+              className="text-lg text-walnut hover:text-wine transition-colors font-display"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              {label}
+            </Link>
+          ))}
+          <Link
+            href="#contact"
+            className="text-lg text-ivory bg-wine px-4 py-3 rounded-sm text-center font-medium hover:bg-wine-light transition-colors"
+            onClick={() => setMobileMenuOpen(false)}
+          >
             Book Consultation
           </Link>
         </div>

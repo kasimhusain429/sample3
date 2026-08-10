@@ -11,7 +11,7 @@ export default function ThreeCanvas({
   className?: string;
 }) {
   return (
-    <div className={`absolute inset-0 z-0 pointer-events-none ${className}`}>
+    <div className={`absolute inset-0 z-0 ${className.includes('pointer-events-auto') ? '' : 'pointer-events-none'} ${className}`}>
       <Canvas
         camera={{ position: [0, 0, 10], fov: 45 }}
         gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
